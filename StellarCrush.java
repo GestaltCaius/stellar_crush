@@ -29,6 +29,10 @@ MECHANICS/GAMEPLAY CHANGES:
 --QuadTree implementation with some of what you may want at : http://algs4.cs.princeton.edu/92search/QuadTree.java.html
 --https://github.com/phishman3579/java-algorithms-implementation/blob/master/src/com/jwetherell/algorithms/data_structures/QuadTree.java may also be useful - look at the Point Region Quadtree
 */
+import java.awt.Font;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 
 public class StellarCrush {
     // Main game class
@@ -41,6 +45,40 @@ public class StellarCrush {
     static double scale = 5e10; // plotted universe size
 
     public static void main(String[] args) {
+		/*** Title screen ***/
+		// Title screen background
+		StdDraw.setScale(0, scale);
+		StdDraw.setPenColor(StdDraw.BLACK);
+		StdDraw.filledSquare(scale / 2.0, scale / 2.0, scale / 2.0);
+
+		// Title screen texts
+		String GAME_NAME = "STELLAR CRUSH";
+		String TITLESCREEN_INSTRUCTIONS = "Press any key to start the game.";
+		String GAME_CONTROLS = "Use arrows to rotate and control your speed";
+		String GAME_INSTRUCTIONS = "Eat all the other spheres to win.";
+		String GAME_KEYS = "Press m to quit the game.";
+		Font font = new Font("Helvetica", Font.BOLD, 60);
+		StdDraw.setPenColor(StdDraw.RED);
+		StdDraw.text(scale * 0.5, scale * 0.80, GAME_NAME);
+		StdDraw.text(scale * 0.5, scale * 0.65, TITLESCREEN_INSTRUCTIONS);
+		StdDraw.text(scale * 0.5, scale * 0.35, GAME_CONTROLS);
+		StdDraw.text(scale * 0.5, scale * 0.25, GAME_INSTRUCTIONS);
+		StdDraw.text(scale * 0.5, scale * 0.10, GAME_KEYS);
+
+		/*** Wait for a key event ***/
+		// Cannot find a solution to check whether or not a key has been pressed
+		// may be KeyEvent, KeyeventDispatcher, KeyboardFocusManager
+ 		KeyEvent isPressed;
+ 		KeyEventDispatcher keyDispatcher = new KeyEventDispatcher(isPressed);
+ 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyDispatcher);
+ 		
+		while (true) {
+			if (isPressed.getID() == KeyEvent.KEY_PRESSED) {
+				StdOut.println("Game started");
+			}
+		}
+
+    	return;
     }
 
 }
