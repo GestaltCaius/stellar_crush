@@ -66,15 +66,17 @@ public class StellarCrush {
 		StdDraw.text(scale * 0.5, scale * 0.10, GAME_KEYS);
 
 		/*** Wait for a key event ***/
-		// Cannot find a solution to check whether or not a key has been pressed
-		// may be KeyEvent, KeyeventDispatcher, KeyboardFocusManager
+		// use StdDraw isKeyPressed method
  		KeyEvent isPressed;
  		KeyEventDispatcher keyDispatcher = new KeyEventDispatcher(isPressed);
  		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyDispatcher);
  		
 		while (true) {
-			if (isPressed.getID() == KeyEvent.KEY_PRESSED) {
-				StdOut.println("Game started");
+			if (StdDraw.isKeyPressed('m') {
+				// quit the game
+			}
+			if (StdDraw.hasNextKeyTyped()) {
+				// Start the game
 			}
 		}
 
