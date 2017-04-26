@@ -33,6 +33,7 @@ import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.util.*;
 
 public class StellarCrush {
     // Main game class
@@ -45,42 +46,36 @@ public class StellarCrush {
     static double scale = 5e10; // plotted universe size
 
     public static void main(String[] args) {
-		/*** Title screen ***/
-		// Title screen background
-		StdDraw.setScale(0, scale);
-		StdDraw.setPenColor(StdDraw.BLACK);
-		StdDraw.filledSquare(scale / 2.0, scale / 2.0, scale / 2.0);
+  /*** Title screen ***/
+  // Title screen background
+  StdDraw.setScale(0, scale);
+  StdDraw.setPenColor(StdDraw.BLACK);
+  StdDraw.filledSquare(scale / 2.0, scale / 2.0, scale / 2.0);
 
-		// Title screen texts
-		String GAME_NAME = "STELLAR CRUSH";
-		String TITLESCREEN_INSTRUCTIONS = "Press any key to start the game.";
-		String GAME_CONTROLS = "Use arrows to rotate and control your speed";
-		String GAME_INSTRUCTIONS = "Eat all the other spheres to win.";
-		String GAME_KEYS = "Press m to quit the game.";
-		Font font = new Font("Helvetica", Font.BOLD, 60);
-		StdDraw.setPenColor(StdDraw.RED);
-		StdDraw.text(scale * 0.5, scale * 0.80, GAME_NAME);
-		StdDraw.text(scale * 0.5, scale * 0.65, TITLESCREEN_INSTRUCTIONS);
-		StdDraw.text(scale * 0.5, scale * 0.35, GAME_CONTROLS);
-		StdDraw.text(scale * 0.5, scale * 0.25, GAME_INSTRUCTIONS);
-		StdDraw.text(scale * 0.5, scale * 0.10, GAME_KEYS);
+  // Title screen texts
+  String GAME_NAME = "STELLAR CRUSH";
+  String TITLESCREEN_INSTRUCTIONS = "Press any key to start the game.";
+  String GAME_CONTROLS = "Use arrows to rotate and control your speed";
+  String GAME_INSTRUCTIONS = "Eat all the other spheres to win.";
+  String GAME_KEYS = "Press m to quit the game.";
+  Font font = new Font("Helvetica", Font.BOLD, 60);
+  StdDraw.setPenColor(StdDraw.RED);
+  StdDraw.text(scale * 0.5, scale * 0.80, GAME_NAME);
+  StdDraw.text(scale * 0.5, scale * 0.65, TITLESCREEN_INSTRUCTIONS);
+  StdDraw.text(scale * 0.5, scale * 0.35, GAME_CONTROLS);
+  StdDraw.text(scale * 0.5, scale * 0.25, GAME_INSTRUCTIONS);
+  StdDraw.text(scale * 0.5, scale * 0.10, GAME_KEYS);
+   
+  while (true) {
+   if (StdDraw.isKeyPressed('m')) {
+    // quit the game
+   }
+   if (StdDraw.hasNextKeyTyped()) {
+    // Start the game
+   }
+  }
 
-		/*** Wait for a key event ***/
-		// use StdDraw isKeyPressed method
- 		KeyEvent isPressed;
- 		KeyEventDispatcher keyDispatcher = new KeyEventDispatcher(isPressed);
- 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyDispatcher);
- 		
-		while (true) {
-			if (StdDraw.isKeyPressed('m') {
-				// quit the game
-			}
-			if (StdDraw.hasNextKeyTyped()) {
-				// Start the game
-			}
-		}
-
-    	return;
+     return;
     }
 
 }

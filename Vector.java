@@ -59,6 +59,16 @@ public class Vector {
             this.data[i] = data[i];
     }
 */
+
+    // getters for rx and ry, others I can't draw the object
+    public double getX() {
+        return data[0];
+    }
+
+    public double getY() {
+        return data[1];
+    }
+
     // return the length of the vector
     public int length() {
         return N;
