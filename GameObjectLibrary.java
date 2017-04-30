@@ -11,7 +11,7 @@ public class GameObjectLibrary {
     private static final double ASTEROID_MIN_MASS = 1E24;
     private static final double ASTEROID_MAX_MASS = 1E26;
     private static final double PLAYER_MASS = 1E25;
-    private static final double VELOCITY_MAX = StellarCrush.scale * 0.1; // Velocity max when we create a body
+    private static final double VELOCITY_MAX = ASTEROID_WIDTH; // Velocity max when we create a body
 
     // create the collection of N asteroids for GameState
     public static ArrayList<GameObject> createObjects(int N) {
@@ -21,9 +21,9 @@ public class GameObjectLibrary {
       Vector v = new Vector(new double[]{Math.random() * VELOCITY_MAX, Math.random() * VELOCITY_MAX});
       double mass = Math.random() * ASTEROID_MAX_MASS;
       mass = mass < ASTEROID_MIN_MASS ? mass + ASTEROID_MIN_MASS : mass; // ugly way of making sure MIN MASS <= mass < MAX MASS
-      Color color = new Color((int) Math.random() * 255, (int) Math.random() * 255, (int) Math.random() * 255); 
+         Color color = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
       // TODO: Make sure the body is visible (not same color as the background)
-      objects.add(new GameObject(r, v, mass, color, ASTEROID_RADIUS)); // returns a boolean that i could use
+         objects.add(new GameObject(r, v, mass, color, StellarCrush.scale / 50)); // returns a boolean that i could use
      }
      return objects;
     }

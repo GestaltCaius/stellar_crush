@@ -6,8 +6,7 @@ public class GameObject {
     private Vector v;
     private final double mass;
     private final Color color;
-    private final double radius;
-
+    private final double radius; //"This default pen radius is about 1/200 the width of the default canvas" @StdDraw doc
 
     public GameObject(Vector r, Vector v, double mass, Color color, double radius) {
      this.r = r;
@@ -15,11 +14,6 @@ public class GameObject {
      this.mass = mass;
      this.color = color;
      this.radius = radius;
-    }
-    
-    // getter mass (MAY BE USELESS NOW, TODO: CHECK if useless)
-    public double getMass() {
-      return mass;
     }
 
     // calcultesForces from GameState has updated f, move then updates v and moves the GameObject

@@ -29,10 +29,12 @@ MECHANICS/GAMEPLAY CHANGES:
 --QuadTree implementation with some of what you may want at : http://algs4.cs.princeton.edu/92search/QuadTree.java.html
 --https://github.com/phishman3579/java-algorithms-implementation/blob/master/src/com/jwetherell/algorithms/data_structures/QuadTree.java may also be useful - look at the Point Region Quadtree
 */
+
 import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.*;
 
 public class StellarCrush {
@@ -46,36 +48,78 @@ public class StellarCrush {
     static double scale = 5e10; // plotted universe size
 
     public static void main(String[] args) {
-  /*** Title screen ***/
-  // Title screen background
-  StdDraw.setScale(0, scale);
-  StdDraw.setPenColor(StdDraw.BLACK);
-  StdDraw.filledSquare(scale / 2.0, scale / 2.0, scale / 2.0);
+        // Screenshots folder and pathname
+        String screenshotsPath = new File("").getAbsolutePath() + "\\screenshots";
+        File screenshotFolder = new File(screenshotsPath);
+        if (!screenshotFolder.exists()) screenshotFolder.mkdir();
+        screenshotsPath += "\\";
 
-  // Title screen texts
-  String GAME_NAME = "STELLAR CRUSH";
-  String TITLESCREEN_INSTRUCTIONS = "Press any key to start the game.";
-  String GAME_CONTROLS = "Use arrows to rotate and control your speed";
-  String GAME_INSTRUCTIONS = "Eat all the other spheres to win.";
-  String GAME_KEYS = "Press m to quit the game.";
-  Font font = new Font("Helvetica", Font.BOLD, 60);
-  StdDraw.setPenColor(StdDraw.RED);
-  StdDraw.text(scale * 0.5, scale * 0.80, GAME_NAME);
-  StdDraw.text(scale * 0.5, scale * 0.65, TITLESCREEN_INSTRUCTIONS);
-  StdDraw.text(scale * 0.5, scale * 0.35, GAME_CONTROLS);
-  StdDraw.text(scale * 0.5, scale * 0.25, GAME_INSTRUCTIONS);
-  StdDraw.text(scale * 0.5, scale * 0.10, GAME_KEYS);
-   
-  while (true) {
-   if (StdDraw.isKeyPressed('m')) {
-    // quit the game
-   }
-   if (StdDraw.hasNextKeyTyped()) {
-    // Start the game
-   }
-  }
-
-     return;
+        boolean TitleScreen = true;
+        boolean quit = false;
+        boolean newGame = false;
+        GameState game = new GameState();
+        StdDraw.enableDoubleBuffering();
+        drawTitle();
+        while (!(TitleScreen && quit)) {
+            if (quit) {
+                if (!TitleScreen) { // We want to quit during game, so we get back to the title screen
+                    quit = !quit;
+                    TitleScreen = !TitleScreen;
+                    drawTitle();
+                } else { // We want to quit and we are on the title screen
+                    break;
+                }
+            }
+            if (!TitleScreen) {
+                if (newGame) {
+                    game.create();
+                    newGame = !newGame;
+                } else {
+                    game.update(GAME_DELAY_TIME);
+                }
+            }
+            char key = '\0';
+            if (StdDraw.hasNextKeyTyped()) key = StdDraw.nextKeyTyped();
+            switch (key) {
+                case 'm':
+                    quit = true;
+                    break;
+                case 'p':
+                    String filename = new Date().toString();
+                    filename = filename.replace(':', '-'); // : seems to be an illegal filename
+                    filename = filename.replace(' ', '_'); // space isnt, but i find it ugly
+                    StdDraw.save(screenshotsPath + filename + ".jpg");
+                    break;
+                case '\0':
+                    break;
+                default:
+                    if (TitleScreen) {
+                        newGame = true;
+                        TitleScreen = false; // Start the game
+                        break;
+                    }
+            }
+        }
+        StdDraw.clear();
+        StdDraw.show();
     }
 
+    private static void drawTitle() {
+        // Title screen background
+        StdDraw.setScale(0, scale);
+        StdDraw.setPenColor(StdDraw.BLACK);
+        StdDraw.filledSquare(scale / 2.0, scale / 2.0, scale / 2.0);
+
+        // Title screen texts
+        Font font = new Font("Helvetica", Font.BOLD, 60);
+        StdDraw.setPenColor(StdDraw.RED);
+        StdDraw.text(scale * 0.5, scale * 0.80, "STELLAR CRUSH");
+        StdDraw.text(scale * 0.5, scale * 0.65, "Press any key to start the game.");
+        StdDraw.text(scale * 0.5, scale * 0.35, "Use arrows to rotate and control your speed");
+        StdDraw.text(scale * 0.5, scale * 0.25, "Eat all the other spheres to win.");
+        StdDraw.text(scale * 0.5, scale * 0.15, "Press p to take a screenshot");
+        StdDraw.text(scale * 0.5, scale * 0.10, "Press m to quit the game.");
+
+        StdDraw.show();
+    }
 }

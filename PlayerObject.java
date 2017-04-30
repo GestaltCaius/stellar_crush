@@ -1,4 +1,4 @@
-public class PlayerObject extends GameObject implements IViewPort {
+/*public class PlayerObject extends GameObject implements IViewPort {
 
     private static final Color DEFAULT_COLOR = StdDraw.WHITE;
     private static final Color DEFAULT_FACING_COLOR = StdDraw.BLACK;
@@ -21,4 +21,4 @@ public class PlayerObject extends GameObject implements IViewPort {
             }
         }
     }
-}
+}*/

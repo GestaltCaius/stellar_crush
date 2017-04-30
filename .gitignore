@@ -24,3 +24,8 @@ hs_err_pid*
 # Custom
 *.pdf
 *~
+*.iml
+*swp
+.idea
+screenshots
+out

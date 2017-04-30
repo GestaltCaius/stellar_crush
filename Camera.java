@@ -1,4 +1,4 @@
-import java.util.*;
+/*import java.util.*;
 
 public class Camera {
     // Virtual camera - uses a plane one unit away from the focal point
@@ -11,9 +11,13 @@ public class Camera {
 
     Camera(IViewPort holder, double FOV) {
         // Constructs a camera with field of view FOV, held by holder, and rendered on canvas dr.
+        this.holder = holder;
+        this.FOV = FOV;
+        this.dr = new Draw(); // TODO:real Camera constructor
     }
 
  void render(Collection<GameObject> objects) {
   // Renders the collection from the camera perspective
  }
 }
+*/

@@ -1,29 +1,28 @@
 /*************************************************************************
- *  Compilation:  javac Vector.java
- *  Execution:    java Vector
- *
- *  Implementation of a vector of real numbers.
- *
- *  This class is implemented to be immutable: once the client program
- *  initialize a Vector, it cannot change any of its fields
- *  (N or data[i]) either directly or indirectly. Immutability is a
- *  very desirable feature of a data type.
- *
- *
- *  % java Vector
- *  x        =  (1.0, 2.0, 3.0, 4.0)
- *  y        =  (5.0, 2.0, 4.0, 1.0)
- *  x + y    =  (6.0, 4.0, 7.0, 5.0)
- *  10x      =  (10.0, 20.0, 30.0, 40.0)
- *  |x|      =  5.477225575051661
- *  <x, y>   =  25.0
- *  |x - y|  =  5.0990195135927845
- *
- *  Note that java.util.Vector is an unrelated Java library class.
- *
+ * Compilation:  javac Vector.java
+ * Execution:    java Vector
+ * <p>
+ * Implementation of a vector of real numbers.
+ * <p>
+ * This class is implemented to be immutable: once the client program
+ * initialize a Vector, it cannot change any of its fields
+ * (N or data[i]) either directly or indirectly. Immutability is a
+ * very desirable feature of a data type.
+ * <p>
+ * <p>
+ * % java Vector
+ * x        =  (1.0, 2.0, 3.0, 4.0)
+ * y        =  (5.0, 2.0, 4.0, 1.0)
+ * x + y    =  (6.0, 4.0, 7.0, 5.0)
+ * 10x      =  (10.0, 20.0, 30.0, 40.0)
+ * |x|      =  5.477225575051661
+ * <x, y>   =  25.0
+ * |x - y|  =  5.0990195135927845
+ * <p>
+ * Note that java.util.Vector is an unrelated Java library class.
  *************************************************************************/
 
-public class Vector { 
+public class Vector {
 
     private final int N;         // length of the vector
     private double[] data;       // array of vector's components
@@ -137,7 +136,7 @@ public class Vector {
         String s = "(";
         for (int i = 0; i < N; i++) {
             s += data[i];
-            if (i < N-1) s+= ", "; 
+            if (i < N - 1) s += ", ";
         }
         return s + ")";
     }
@@ -145,8 +144,8 @@ public class Vector {
 
     // test client
     public static void main(String[] args) {
-        double[] xdata = { 1.0, 2.0, 3.0, 4.0 };
-        double[] ydata = { 5.0, 2.0, 4.0, 1.0 };
+        double[] xdata = {1.0, 2.0, 3.0, 4.0};
+        double[] ydata = {5.0, 2.0, 4.0, 1.0};
 
         Vector x = new Vector(xdata);
         Vector y = new Vector(ydata);
