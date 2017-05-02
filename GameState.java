@@ -4,7 +4,7 @@ public class GameState {
     // Class representing the game state and implementing main game loop update step.
 
     private ArrayList<GameObject> objects;
-    //private final PlayerObject player;
+    private final PlayerObject player;
 
     void update(int delay) {
         // Main game loop update step
@@ -34,15 +34,18 @@ public class GameState {
     }
 
     // Create a new universe
-    void create() {
+    public GameState() {
         StdDraw.setScale(-StellarCrush.scale, StellarCrush.scale);
-        int BODIES_NUMBER = (int) (Math.random() * 10) + 1; // Random amount of bodies in our universe (at least one)
+        // Random amount of bodies in our universe (at least five)
+            // Not a class constant because I wanted it to change everytime we start a new game
+        int BODIES_NUMBER = (int) (Math.random() * 30) + 5;
         objects = GameObjectLibrary.createObjects(BODIES_NUMBER);
         // init of forces Map
         HashMap<GameObject, Vector> forces = new HashMap<GameObject, Vector>();
         for (GameObject asteroid : objects) { // for each asteroid, we compute the force using the otherAsteroids of the objects collection
             forces.put(asteroid, new Vector(new double[]{0, 0}));
         }
-        // TODO : create player
+        // Player Object creation
+        player = (PlayerObject) objects.get(0); // Since objects[0] is the player, that should be OK
     }
 }

@@ -13,4 +13,13 @@ public class VectorUtil {
 		// Used to avoid exception in Vector.java
         return new Vector(2);
     }
+
+    // getters for rx and ry, otherwise I can't draw the object
+    static double getX(Vector v) {
+        return v.cartesian(0);
+    }
+
+    static double getY(Vector v) {
+        return v.cartesian(1);
+    }
 }

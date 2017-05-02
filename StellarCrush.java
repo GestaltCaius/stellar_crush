@@ -72,7 +72,7 @@ public class StellarCrush {
             }
             if (!TitleScreen) {
                 if (newGame) {
-                    game.create();
+                    game = new GameState();
                     newGame = !newGame;
                 } else {
                     game.update(GAME_DELAY_TIME);

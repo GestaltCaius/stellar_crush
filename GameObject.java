@@ -25,7 +25,7 @@ public class GameObject {
 
     public void draw() {
      StdDraw.setPenColor(color);
-     StdDraw.filledCircle(r.getX(), r.getY(), radius);
+     StdDraw.filledCircle(VectorUtil.getX(r), VectorUtil.getY(r), radius);
     }
     
     // return distance to the pow of 2
