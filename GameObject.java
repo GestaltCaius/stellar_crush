@@ -40,4 +40,12 @@ public class GameObject {
         (dist * dist + Math.pow(StellarCrush.softE, 2));
       return delta.direction().times(F);
     }
+
+    public Vector getLocation() {
+        return new Vector(new double[]{VectorUtil.getX(r), VectorUtil.getY(r)});
+    }
+
+    public Vector getVelocity() {
+        return new Vector(new double[]{VectorUtil.getX(v), VectorUtil.getY(v)});
+    }
 }

@@ -33,16 +33,17 @@ public class PlayerObject extends GameObject implements IViewPort {
         }
     }
 
-    // location of camera
+    // location of camera (same as the player location I guess)
     public Vector getLocation() {
-        return new Vector(2);
-        //TODO
+        return this.getLocation();
+        // had to implement it in GameObject because I can't access this.r here
     }
 
-    //direction camera is facing in
+    //direction camera is facing in (we can use the direction vector)
+    // btw, I did not have to implement another version of direction() in VectorUtility
+    // TODO make sure it's *always* OK to use the initial Vector direction method. Might cause bugs
     public Vector getFacingVector() {
-        return new Vector(2);
-        //TODO
+        return VectorUtil.direction(this.getVelocity());
     }
 
     // highlight objects below this mass
