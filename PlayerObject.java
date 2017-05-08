@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class PlayerObject extends GameObject implements IViewPort {
 
-    private static final Color DEFAULT_COLOR = StdDraw.WHITE;
-    private static final Color DEFAULT_FACING_COLOR = StdDraw.BLACK;
+    private static final Color DEFAULT_COLOR = Draw.WHITE;
+    private static final Color DEFAULT_FACING_COLOR = Draw.BLACK;
     private static final double DEFAULT_FOV = Math.PI/2; // field of view of player's viewport
     private static final double FOV_INCREMENT = Math.PI/36; // rotation speed
 
@@ -35,7 +35,7 @@ public class PlayerObject extends GameObject implements IViewPort {
     }
 
     public void updatePlayerView(ArrayList<GameObject> objects) {
-        cam.getDraw().clear(StdDraw.BLACK);
+        cam.getDraw().clear(Draw.BLACK);
         cam.render(objects);
         cam.getDraw().show();
     }

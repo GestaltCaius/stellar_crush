@@ -54,72 +54,63 @@ public class StellarCrush {
         if (!screenshotFolder.exists()) screenshotFolder.mkdir();
         screenshotsPath += "\\";
 
+        // Draw
+        Draw dr = new Draw();
+
         boolean TitleScreen = true;
-        boolean quit = false;
         boolean newGame = false;
-        GameState game = new GameState();
-        StdDraw.enableDoubleBuffering();
-        drawTitle();
-        while (!(TitleScreen && quit)) {
-            if (quit) {
-                if (!TitleScreen) { // We want to quit during game, so we get back to the title screen
-                    quit = !quit;
-                    TitleScreen = !TitleScreen;
-                    drawTitle();
-                } else { // We want to quit and we are on the title screen
-                    break;
-                }
-            }
-            if (!TitleScreen) {
-                if (newGame) {
-                    game = new GameState();
-                    newGame = !newGame;
+        GameState game = null;
+        dr.enableDoubleBuffering();
+        drawTitle(dr);
+        while (true) {
+            if (newGame) {
+                if (TitleScreen) {
+                    game = new GameState(dr);
+                    TitleScreen = false;
                 } else {
                     game.update(GAME_DELAY_TIME);
                 }
             }
             char key = '\0';
-            if (StdDraw.hasNextKeyTyped()) key = StdDraw.nextKeyTyped();
+            if (dr.hasNextKeyTyped()) key = dr.nextKeyTyped();
             switch (key) {
                 case 'm':
-                    quit = true;
+                    System.exit(0);
                     break;
                 case 'p':
                     String filename = new Date().toString();
                     filename = filename.replace(':', '-'); // : seems to be an illegal filename
                     filename = filename.replace(' ', '_'); // space isnt, but i find it ugly
-                    StdDraw.save(screenshotsPath + filename + ".jpg");
+                    dr.save(screenshotsPath + filename + ".jpg");
                     break;
                 case '\0':
                     break;
                 default:
                     if (TitleScreen) {
                         newGame = true;
-                        TitleScreen = false; // Start the game
                         break;
                     }
             }
         }
-        StdDraw.clear();
-        StdDraw.show();
     }
 
-    private static void drawTitle() {
+    private static void drawTitle(Draw dr) {
         // Title screen background
-        StdDraw.setScale(0, scale);
-        StdDraw.setPenColor(StdDraw.BLACK);
-        StdDraw.filledSquare(scale / 2.0, scale / 2.0, scale / 2.0);
+        dr.setXscale(0, scale);
+        dr.setYscale(0, scale);
+        dr.setPenColor(dr.BLACK);
+        dr.filledSquare(scale / 2.0, scale / 2.0, scale / 2.0);
 
         // Title screen texts
         Font font = new Font("Helvetica", Font.BOLD, 60);
-        StdDraw.setPenColor(StdDraw.RED);
-        StdDraw.text(scale * 0.5, scale * 0.80, "STELLAR CRUSH");
-        StdDraw.text(scale * 0.5, scale * 0.65, "Press any key to start the game.");
-        StdDraw.text(scale * 0.5, scale * 0.35, "Use arrows to rotate and control your speed");
-        StdDraw.text(scale * 0.5, scale * 0.25, "Eat all the other spheres to win.");
-        StdDraw.text(scale * 0.5, scale * 0.15, "Press p to take a screenshot");
-        StdDraw.text(scale * 0.5, scale * 0.10, "Press m to quit the game.");
+        dr.setPenColor(dr.RED);
+        dr.text(scale * 0.5, scale * 0.80, "STELLAR CRUSH");
+        dr.text(scale * 0.5, scale * 0.65, "Press any key to start the game.");
+        dr.text(scale * 0.5, scale * 0.35, "Use arrows to rotate and control your speed");
+        dr.text(scale * 0.5, scale * 0.25, "Eat all the other spheres to win.");
+        dr.text(scale * 0.5, scale * 0.15, "Press p to take a screenshot");
+        dr.text(scale * 0.5, scale * 0.10, "Press m to quit the game.");
 
-        StdDraw.show();
+        dr.show();
     }
 }

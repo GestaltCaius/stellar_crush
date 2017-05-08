@@ -23,9 +23,9 @@ public class GameObject {
      r = r.plus(v.times(dt)); // moves the GO
     }
 
-    public void draw() {
-     StdDraw.setPenColor(color);
-     StdDraw.filledCircle(VectorUtil.getX(r), VectorUtil.getY(r), radius);
+    public void draw(Draw dr) {
+     dr.setPenColor(color);
+     dr.filledCircle(VectorUtil.getX(r), VectorUtil.getY(r), radius);
     }
     
     // return distance to the pow of 2

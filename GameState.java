@@ -5,17 +5,18 @@ public class GameState {
 
     private ArrayList<GameObject> objects;
     private final PlayerObject player;
+    private final Draw dr;
 
     void update(int delay) {
         // Main game loop update step
         HashMap<GameObject, Vector> forces = calculateForces();
-        StdDraw.clear(StdDraw.BLACK);
-        // if too slow, could do two seperates loops for move and show, with clear in the middle
+        dr.clear(Draw.BLACK);
+        // if too slow, could do two separate loops for move and show, with clear in the middle
         for (GameObject asteroid : objects) {
             asteroid.move(forces.get(asteroid), delay);
-            asteroid.draw();
+            asteroid.draw(dr);
         }
-        StdDraw.show(); // show(int i) is deprecated: "replaced by enableDoubleBuffering(), show(), and pause(int t)"
+        dr.show(); // show(int i) is deprecated: "replaced by enableDoubleBuffering(), show(), and pause(int t)"
 
         // Player View
         player.updatePlayerView(objects);
@@ -38,8 +39,10 @@ public class GameState {
     }
 
     // Create a new universe
-    public GameState() {
-        StdDraw.setScale(-StellarCrush.scale, StellarCrush.scale);
+    public GameState(Draw dr) {
+        this.dr = dr;
+        dr.setXscale(-StellarCrush.scale, StellarCrush.scale);
+        dr.setYscale(-StellarCrush.scale, StellarCrush.scale);
         // Random amount of bodies in our universe (at least five)
             // Not a class constant because I wanted it to change everytime we start a new game
         int BODIES_NUMBER = (int) (Math.random() * 30) + 5;
