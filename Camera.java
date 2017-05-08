@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.*;
 
 public class Camera {
@@ -14,14 +15,38 @@ public class Camera {
         this.holder = holder;
         this.FOV = FOV;
         this.dr = new Draw();
+        dr.show();
     }
 
-    void render(Collection<GameObject> objects) {
+    void render(ArrayList<GameObject> objects) {
         // Renders the collection from the camera perspective
-
+        HashMap<Double, GameObject> distances = new HashMap<>(); // Have to use Double and not double which is immutable... @http://stackoverflow.com/questions/8224240/issue-with-using-double-as-value-in-hashmap
+        ArrayList<Double> distList = new ArrayList<>();
+        // Add every enemy in the FOV to distances and distList
+        for (GameObject asteroid : objects) {
+            if (holder.isInFOV(asteroid)) {
+                Double d = new Double(holder.getLocation().distanceTo(asteroid.getLocation()));
+                distances.put(d, asteroid);
+                distList.add(d);
+            }
+        }
+        // Sort distList to be able to draw the most far away enemies first
+        Collections.sort(distList);
+        Collections.reverse(distList); // descending order
+        // Draw the enemies
+        for (Double d : distList) {
+            renderObject(distances.get(d));
+        }
     }
 
     Draw getDraw() {
         return this.dr;
+    }
+
+    private void renderObject(GameObject object) {
+        dr.setPenColor(object.getColor());
+        dr.filledCircle(VectorUtil.getX(object.getLocation()),
+                VectorUtil.getY(holder.getLocation()),
+                object.getRadius());
     }
 }

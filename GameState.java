@@ -16,6 +16,10 @@ public class GameState {
             asteroid.draw();
         }
         StdDraw.show(); // show(int i) is deprecated: "replaced by enableDoubleBuffering(), show(), and pause(int t)"
+
+        // Player View
+        player.updatePlayerView(objects);
+        player.processCommand(delay);
     }
 
     private HashMap<GameObject, Vector> calculateForces() {

@@ -4,4 +4,5 @@ public interface IViewPort {
 	Vector getLocation(); // location of camera
 	Vector getFacingVector(); //direction camera is facing in
 	double highlightLevel(); // highlight objects below this mass
+	boolean isInFOV(GameObject that);
 }

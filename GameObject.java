@@ -48,4 +48,14 @@ public class GameObject {
     public Vector getVelocity() {
         return new Vector(new double[]{VectorUtil.getX(v), VectorUtil.getY(v)});
     }
+
+    // Return the color of the object (useful to draw it in the IViewPort)
+        // I could've return color, but I just want to make sure that nobody can access my private fields
+    public Color getColor() {
+        return new Color(color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    public double getRadius() {
+        return radius;
+    }
 }

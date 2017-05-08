@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class PlayerObject extends GameObject implements IViewPort {
 
@@ -33,10 +34,10 @@ public class PlayerObject extends GameObject implements IViewPort {
         }
     }
 
-    // location of camera (same as the player location I guess)
-    public Vector getLocation() {
-        return this.getLocation();
-        // had to implement it in GameObject because I can't access this.r here
+    public void updatePlayerView(ArrayList<GameObject> objects) {
+        cam.getDraw().clear(StdDraw.BLACK);
+        cam.render(objects);
+        cam.getDraw().show();
     }
 
     //direction camera is facing in (we can use the direction vector)
@@ -50,5 +51,14 @@ public class PlayerObject extends GameObject implements IViewPort {
     public double highlightLevel() {
         return 42.0;
         //TODO
+    }
+
+    // return true is the angle between facing and the enemy-player vector is less than FOV/2
+    public boolean isInFOV(GameObject that) {
+        Vector facingForward = this.getFacingVector();
+        Vector dist = that.getLocation().minus(this.getLocation()); // Vector between player and enemy( b - a)
+        double theta = Math.acos( (facingForward.dot(dist)) /
+                (facingForward.magnitude() * dist.magnitude()));
+        return theta < DEFAULT_FOV / 2;
     }
 }
