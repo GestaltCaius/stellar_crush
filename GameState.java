@@ -16,6 +16,9 @@ public class GameState {
             asteroid.move(forces.get(asteroid), delay);
             asteroid.draw(dr);
         }
+        Vector playerEyesight = player.getLocation().plus(player.getFacingVector().times(player.getRadius()));
+        dr.setPenColor(Draw.RED);
+        dr.filledCircle(VectorUtil.getX(playerEyesight), VectorUtil.getY(playerEyesight), player.getRadius() * 0.5);
         dr.show(); // show(int i) is deprecated: "replaced by enableDoubleBuffering(), show(), and pause(int t)"
 
         // Player View
@@ -45,7 +48,7 @@ public class GameState {
         dr.setYscale(-StellarCrush.scale, StellarCrush.scale);
         // Random amount of bodies in our universe (at least five)
             // Not a class constant because I wanted it to change everytime we start a new game
-        int BODIES_NUMBER = (int) (Math.random() * 30) + 5;
+        int BODIES_NUMBER = (int) (Math.random() * 10) + 5;
         objects = GameObjectLibrary.createObjects(BODIES_NUMBER);
         // init of forces Map
         HashMap<GameObject, Vector> forces = new HashMap<GameObject, Vector>();

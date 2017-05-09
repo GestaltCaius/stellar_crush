@@ -17,9 +17,13 @@ public class Camera {
         this.holder = holder;
         this.FOV = FOV;
         this.dr = new Draw();
+        dr.enableDoubleBuffering();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         dr.setCanvasSize((int) (dim.width * 0.9) / 2, (int) (dim.height * 0.9));
         dr.setLocationOnScreen(dim.width / 2, 1);
+        dr.setXscale(-StellarCrush.scale, StellarCrush.scale);
+        double Yscale = ((PlayerObject) holder).getRadius() * 10;
+        dr.setYscale(-Yscale, Yscale);
     }
 
     void render(ArrayList<GameObject> objects) {
@@ -28,8 +32,8 @@ public class Camera {
         ArrayList<Double> distList = new ArrayList<>();
         // Add every enemy in the FOV to distances and distList
         for (GameObject asteroid : objects) {
-            if (holder.isInFOV(asteroid)) {
-                Double d = new Double(holder.getLocation().distanceTo(asteroid.getLocation()));
+            if (this.isInFOV(asteroid)) {
+                Double d = holder.getLocation().distanceTo(asteroid.getLocation());
                 distances.put(d, asteroid);
                 distList.add(d);
             }
@@ -38,9 +42,11 @@ public class Camera {
         Collections.sort(distList);
         Collections.reverse(distList); // descending order
         // Draw the enemies
+        dr.clear(Draw.BLACK);
         for (Double d : distList) {
             renderObject(distances.get(d));
         }
+        dr.show();
     }
 
     Draw getDraw() {
@@ -48,9 +54,19 @@ public class Camera {
     }
 
     private void renderObject(GameObject object) {
+        Vector delta = object.getLocation().minus(holder.getLocation());
         dr.setPenColor(object.getColor());
-        dr.filledCircle(VectorUtil.getX(object.getLocation()),
-                VectorUtil.getY(holder.getLocation()),
+        dr.filledCircle(VectorUtil.getX(delta), 0,
                 object.getRadius());
+    }
+
+
+    // return true is the angle between facing and the enemy-player vector is less than FOV/2
+    public boolean isInFOV(GameObject that) {
+        Vector facingForward = holder.getFacingVector();
+        Vector dist = that.getLocation().minus(holder.getLocation()); // Vector between player and enemy( b - a)
+        double theta = Math.acos( (facingForward.dot(dist)) /
+                (facingForward.magnitude() * dist.magnitude()));
+        return theta < this.FOV / 2;
     }
 }

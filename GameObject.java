@@ -9,36 +9,43 @@ public class GameObject {
     private final double radius; //"This default pen radius is about 1/200 the width of the default canvas" @StdDraw doc
 
     public GameObject(Vector r, Vector v, double mass, Color color, double radius) {
-     this.r = r;
-     this.v = v;
-     this.mass = mass;
-     this.color = color;
-     this.radius = radius;
+        this.r = r;
+        this.v = v;
+        this.mass = mass;
+        this.color = color;
+        this.radius = radius;
     }
 
     // calcultesForces from GameState has updated f, move then updates v and moves the GameObject
     public void move(Vector f, double dt) {
-     Vector a = f.times(1/mass); // a = F/m
-     v = v.plus(a.times(dt)); // updates velocity
-     r = r.plus(v.times(dt)); // moves the GO
+        Vector a = f.times(1 / mass); // a = F/m
+        v = v.plus(a.times(dt)); // updates velocity
+        r = r.plus(v.times(dt)); // moves the GO
+        double rx = VectorUtil.getX(r);
+        double ry = VectorUtil.getY(r);
+        double sc = StellarCrush.scale;
+        if (rx <= -sc -this.radius) r = new Vector(new double[]{rx + 2*sc, ry});
+        if (rx >= sc + this.radius) r = new Vector(new double[]{rx - 2*sc, ry});
+        if (ry <= -sc -this.radius) r = new Vector(new double[]{rx, ry + 2*sc});
+        if (ry >= sc + this.radius) r = new Vector(new double[]{rx, ry -2*sc});
     }
 
     public void draw(Draw dr) {
-     dr.setPenColor(color);
-     dr.filledCircle(VectorUtil.getX(r), VectorUtil.getY(r), radius);
+        dr.setPenColor(color);
+        dr.filledCircle(VectorUtil.getX(r), VectorUtil.getY(r), radius);
     }
-    
+
     // return distance to the pow of 2
     public double distanceTo(GameObject that) {
-      return this.r.distanceTo(that.r);
+        return this.r.distanceTo(that.r);
     }
-    
+
     public Vector forceFrom(GameObject that) {
-      Vector delta = this.r.minus(that.r); // a - b
-      double dist = delta.magnitude();
-      double F = (StellarCrush.G * this.mass * that.mass) / 
-        (dist * dist + Math.pow(StellarCrush.softE, 2));
-      return delta.direction().times(F);
+        Vector delta = this.r.minus(that.r); // a - b
+        double dist = delta.magnitude();
+        double F = (StellarCrush.G * this.mass * that.mass) /
+                (dist * dist + Math.pow(StellarCrush.softE, 2));
+        return delta.direction().times(F);
     }
 
     public Vector getLocation() {
@@ -50,12 +57,17 @@ public class GameObject {
     }
 
     // Return the color of the object (useful to draw it in the IViewPort)
-        // I could've return color, but I just want to make sure that nobody can access my private fields
+    // I could've return color, but I just want to make sure that nobody can access my private fields
     public Color getColor() {
         return new Color(color.getRed(), color.getGreen(), color.getBlue());
     }
 
     public double getRadius() {
         return radius;
+    }
+
+    public void playerMove(double X, double Y) {
+        this.r = new Vector(new double[]{VectorUtil.getX(this.r) + X,
+                VectorUtil.getY(this.r) + Y});
     }
 }

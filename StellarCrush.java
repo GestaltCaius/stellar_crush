@@ -50,10 +50,11 @@ public class StellarCrush {
     static final double G = 6.67e-11; // gravitational constant
     static final double softE = 0.001; // softening factor to avoid division by zero calculating force for co-located objects
     static double scale = 5e10; // plotted universe size
+    public static String screenshotsPath;
 
     public static void main(String[] args) {
-        // Screenshots folder and pathname
-        String screenshotsPath = new File("").getAbsolutePath() + "\\screenshots";
+        // Screenshots folder and pathname (only works on Windows, because on Linux it creates a stellarcrush\screenshots folder)
+        screenshotsPath = new File("").getAbsolutePath() + "\\screenshots";
         File screenshotFolder = new File(screenshotsPath);
         if (!screenshotFolder.exists()) screenshotFolder.mkdir();
         screenshotsPath += "\\";
@@ -77,7 +78,7 @@ public class StellarCrush {
             char key = '\0';
             if (dr.hasNextKeyTyped()) key = dr.nextKeyTyped();
             switch (key) {
-                case 'm':
+                case 'q':
                     System.exit(0); // return doesnt work, dunno why
                 case 'p':
                     String filename = new Date().toString();
@@ -99,7 +100,7 @@ public class StellarCrush {
     private static void drawTitle(Draw dr) {
         // Title screen background
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        dr.setCanvasSize((int) (dim.width * 0.9) /2, (int) (dim.height * 0.9));
+        dr.setCanvasSize((int) (dim.width * 0.9) / 2, (int) (dim.height * 0.9));
         dr.setXscale(0, scale);
         dr.setYscale(0, scale);
         dr.clear(Draw.BLACK);
@@ -108,11 +109,18 @@ public class StellarCrush {
         dr.setPenColor(Draw.BOOK_RED);
         dr.text(scale * 0.5, scale * 0.80, "STELLAR CRUSH");
         dr.text(scale * 0.5, scale * 0.65, "Press any key to start the game.");
-        dr.text(scale * 0.5, scale * 0.35, "Use arrows to rotate and control your speed");
+        dr.text(scale * 0.5, scale * 0.35, "Use I,J,K,L to rotate and control your speed");
         dr.text(scale * 0.5, scale * 0.25, "Eat all the other spheres to win.");
         dr.text(scale * 0.5, scale * 0.15, "Press p to take a screenshot");
-        dr.text(scale * 0.5, scale * 0.10, "Press m to quit the game.");
+        dr.text(scale * 0.5, scale * 0.10, "Press q to quit the game.");
 
         dr.show();
+    }
+
+    public static void takeScreenshot(Draw dr) {
+        String filename = new Date().toString();
+        filename = filename.replace(':', '-'); // : seems to be an illegal filename
+        filename = filename.replace(' ', '_'); // space isnt, but i find it ugly
+        dr.save(screenshotsPath + filename + ".jpg");
     }
 }

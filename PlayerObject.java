@@ -1,13 +1,15 @@
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PlayerObject extends GameObject implements IViewPort {
 
     private static final Color DEFAULT_COLOR = Draw.WHITE;
     private static final Color DEFAULT_FACING_COLOR = Draw.BLACK;
-    private static final double DEFAULT_FOV = Math.PI/2; // field of view of player's viewport
-    private static final double FOV_INCREMENT = Math.PI/36; // rotation speed
+    private static final double DEFAULT_FOV = Math.PI / 2; // field of view of player's viewport
+    private static final double FOV_INCREMENT = Math.PI / 36; // rotation speed
+    private static final double MOVING_VELOCITY = GameObjectLibrary.VELOCITY_MAX * 100000;
 
     private Camera cam;
 
@@ -18,18 +20,37 @@ public class PlayerObject extends GameObject implements IViewPort {
         this.cam = new Camera(this, DEFAULT_FOV);
     }
 
-	//@Override I'm not using processCommand in GameObject (yet)
+    //@Override I'm not using processCommand in GameObject (yet)
     void processCommand(int delay) {
         boolean up, down, left, right;
         // Process keys applying to the player
-		// Retrieve 
+        // Retrieve
         if (cam != null) {
             // No commands if no draw canvas to retrieve them from!
             Draw dr = cam.getDraw();
-            if (dr != null) {
-				// Example code
-                if (dr.isKeyPressed(KeyEvent.VK_UP)) up = true;
-                if (dr.isKeyPressed(KeyEvent.VK_DOWN)) down = true;
+            char key = '\0';
+            if (dr.hasNextKeyTyped()) key = dr.nextKeyTyped();
+            switch (key) {
+                case 'q':
+                    System.exit(0); // return doesnt work, dunno why
+                    return;
+                case 'p':
+                    StellarCrush.takeScreenshot(dr);
+                    break;
+                case 'i': // UP
+                    this.playerMove(0, -MOVING_VELOCITY);
+                    break;
+                case 'k': // DOWN
+                    this.playerMove(0, +MOVING_VELOCITY);
+                    break;
+                case 'j': // LEFT
+                    this.playerMove(-MOVING_VELOCITY, 0);
+                    break;
+                case 'l': // RIGHT
+                    this.playerMove(+MOVING_VELOCITY, 0);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -51,14 +72,5 @@ public class PlayerObject extends GameObject implements IViewPort {
     public double highlightLevel() {
         return 42.0;
         //TODO
-    }
-
-    // return true is the angle between facing and the enemy-player vector is less than FOV/2
-    public boolean isInFOV(GameObject that) {
-        Vector facingForward = this.getFacingVector();
-        Vector dist = that.getLocation().minus(this.getLocation()); // Vector between player and enemy( b - a)
-        double theta = Math.acos( (facingForward.dot(dist)) /
-                (facingForward.magnitude() * dist.magnitude()));
-        return theta < DEFAULT_FOV / 2;
     }
 }
