@@ -9,7 +9,7 @@ public class PlayerObject extends GameObject implements IViewPort {
     private static final Color DEFAULT_FACING_COLOR = Draw.BLACK;
     private static final double DEFAULT_FOV = Math.PI / 2; // field of view of player's viewport
     private static final double FOV_INCREMENT = Math.PI / 36; // rotation speed
-    private static final double MOVING_VELOCITY = GameObjectLibrary.VELOCITY_MAX * 100000;
+    private static final double MOVING_VELOCITY = GameObjectLibrary.VELOCITY_MAX / 10;
 
     private Camera cam;
 
@@ -44,10 +44,10 @@ public class PlayerObject extends GameObject implements IViewPort {
                     this.playerMove(0, +MOVING_VELOCITY);
                     break;
                 case 'j': // LEFT
-                    this.playerMove(-MOVING_VELOCITY, 0);
+                    this.playerRotate(-FOV_INCREMENT);
                     break;
                 case 'l': // RIGHT
-                    this.playerMove(+MOVING_VELOCITY, 0);
+                    this.playerRotate(+FOV_INCREMENT);
                     break;
                 default:
                     break;

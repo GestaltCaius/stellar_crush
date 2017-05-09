@@ -3,9 +3,14 @@ public class VectorUtil {
 
     public static final Vector TWO_D_ZERO = new Vector(new double[]{0, 0});
 
+    // found the formula here : http://stackoverflow.com/questions/22818531/how-to-rotate-2d-vector
     static Vector rotate(Vector v, double ang) {
         // Rotate v by ang radians - two dimensions only.
-        return new Vector(2);
+        double cos = Math.cos(ang);
+        double sin = Math.sin(ang);
+        double vx = getX(v);
+        double vy = getY(v);
+        return new Vector(new double[]{vx * cos - vy * sin, vx * sin + vy * cos});
     }
 
     static Vector direction(Vector v) {

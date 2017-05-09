@@ -67,7 +67,11 @@ public class GameObject {
     }
 
     public void playerMove(double X, double Y) {
-        this.r = new Vector(new double[]{VectorUtil.getX(this.r) + X,
-                VectorUtil.getY(this.r) + Y});
+        this.v = new Vector(new double[]{VectorUtil.getX(this.v) + X,
+                VectorUtil.getY(this.v) + Y});
+    }
+
+    public void playerRotate(double ang) {
+        this.v = VectorUtil.rotate(this.v, ang);
     }
 }
