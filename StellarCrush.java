@@ -30,12 +30,16 @@ MECHANICS/GAMEPLAY CHANGES:
 --https://github.com/phishman3579/java-algorithms-implementation/blob/master/src/com/jwetherell/algorithms/data_structures/QuadTree.java may also be useful - look at the Point Region Quadtree
 */
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.*;
+
+import javax.tools.Tool;
 
 public class StellarCrush {
     // Main game class
@@ -56,11 +60,10 @@ public class StellarCrush {
 
         // Draw
         Draw dr = new Draw();
-
+        dr.enableDoubleBuffering();
         boolean TitleScreen = true;
         boolean newGame = false;
         GameState game = null;
-        dr.enableDoubleBuffering();
         drawTitle(dr);
         while (true) {
             if (newGame) {
@@ -75,8 +78,7 @@ public class StellarCrush {
             if (dr.hasNextKeyTyped()) key = dr.nextKeyTyped();
             switch (key) {
                 case 'm':
-                    System.exit(0);
-                    break;
+                    System.exit(0); // return doesnt work, dunno why
                 case 'p':
                     String filename = new Date().toString();
                     filename = filename.replace(':', '-'); // : seems to be an illegal filename
@@ -96,14 +98,14 @@ public class StellarCrush {
 
     private static void drawTitle(Draw dr) {
         // Title screen background
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        dr.setCanvasSize((int) (dim.width * 0.9) /2, (int) (dim.height * 0.9));
         dr.setXscale(0, scale);
         dr.setYscale(0, scale);
-        dr.setPenColor(dr.BLACK);
-        dr.filledSquare(scale / 2.0, scale / 2.0, scale / 2.0);
+        dr.clear(Draw.BLACK);
 
         // Title screen texts
-        Font font = new Font("Helvetica", Font.BOLD, 60);
-        dr.setPenColor(dr.RED);
+        dr.setPenColor(Draw.BOOK_RED);
         dr.text(scale * 0.5, scale * 0.80, "STELLAR CRUSH");
         dr.text(scale * 0.5, scale * 0.65, "Press any key to start the game.");
         dr.text(scale * 0.5, scale * 0.35, "Use arrows to rotate and control your speed");

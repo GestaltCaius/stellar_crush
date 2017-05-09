@@ -11,7 +11,7 @@ public class GameObjectLibrary {
     private static final double ASTEROID_MIN_MASS = 1E24;
     private static final double ASTEROID_MAX_MASS = 1E26;
     private static final double PLAYER_MASS = 1E25;
-    private static final double VELOCITY_MAX = ASTEROID_WIDTH * 2; // Velocity max when we create a body
+    private static final double VELOCITY_MAX = ASTEROID_WIDTH * 1000; // Velocity max when we create a body
 
     // create the collection of N asteroids for GameState
     public static ArrayList<GameObject> createObjects(int N) {

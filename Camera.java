@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.*;
 
 public class Camera {
@@ -15,7 +17,9 @@ public class Camera {
         this.holder = holder;
         this.FOV = FOV;
         this.dr = new Draw();
-        dr.show();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        dr.setCanvasSize((int) (dim.width * 0.9) / 2, (int) (dim.height * 0.9));
+        dr.setLocationOnScreen(dim.width / 2, 1);
     }
 
     void render(ArrayList<GameObject> objects) {
