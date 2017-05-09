@@ -22,8 +22,9 @@ public class Camera {
         dr.setCanvasSize((int) (dim.width * 0.9) / 2, (int) (dim.height * 0.9));
         dr.setLocationOnScreen(dim.width / 2, 1);
         dr.setXscale(-StellarCrush.scale, StellarCrush.scale);
-        double Yscale = ((PlayerObject) holder).getRadius() * 10;
-        dr.setYscale(-Yscale, Yscale);
+        dr.setYscale(-StellarCrush.scale, StellarCrush.scale);
+        //double Yscale = ((PlayerObject) holder).getRadius() * 10;
+        //dr.setYscale(-Yscale, Yscale);
     }
 
     void render(ArrayList<GameObject> objects) {

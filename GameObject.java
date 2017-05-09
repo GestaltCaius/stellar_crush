@@ -20,6 +20,9 @@ public class GameObject {
     public void move(Vector f, double dt) {
         Vector a = f.times(1 / mass); // a = F/m
         v = v.plus(a.times(dt)); // updates velocity
+        // Cap velocity
+        if (VectorUtil.getX(v) > GameObjectLibrary.VELOCITY_MAX) v = new Vector(new double[]{GameObjectLibrary.VELOCITY_MAX, VectorUtil.getY(v)});
+        if (VectorUtil.getY(v) > GameObjectLibrary.VELOCITY_MAX) v = new Vector(new double[]{VectorUtil.getX(v), GameObjectLibrary.VELOCITY_MAX});
         r = r.plus(v.times(dt)); // moves the GO
         double rx = VectorUtil.getX(r);
         double ry = VectorUtil.getY(r);
