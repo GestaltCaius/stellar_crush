@@ -69,12 +69,14 @@ public class GameObject {
         return radius;
     }
 
-    public void playerMove(double X, double Y) {
-        this.v = new Vector(new double[]{VectorUtil.getX(this.v) + X,
-                VectorUtil.getY(this.v) + Y});
-    }
-
+    // Had to put it here and not in PlayerObject because I need to edit Vector v
     public void playerRotate(double ang) {
         this.v = VectorUtil.rotate(this.v, ang);
+    }
+
+    public void playerMove(Vector facing, boolean up) {
+        if (!up) this.playerRotate(Math.PI); // change direction
+        Vector addpos = facing.times(this.getRadius() / 2); // it's either + or - MOVING_VELOCITY
+        this.r = this.r.plus(addpos);
     }
 }

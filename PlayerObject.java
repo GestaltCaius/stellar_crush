@@ -9,7 +9,7 @@ public class PlayerObject extends GameObject implements IViewPort {
     private static final Color DEFAULT_FACING_COLOR = Draw.BLACK;
     private static final double DEFAULT_FOV = Math.PI / 2; // field of view of player's viewport
     private static final double FOV_INCREMENT = Math.PI / 36; // rotation speed
-    private static final double MOVING_VELOCITY = GameObjectLibrary.VELOCITY_MAX / 10;
+    private static final double MOVING_VELOCITY = GameObjectLibrary.VELOCITY_MAX;
 
     private Camera cam;
 
@@ -38,16 +38,16 @@ public class PlayerObject extends GameObject implements IViewPort {
                     StellarCrush.takeScreenshot(dr);
                     break;
                 case 'i': // UP
-                    this.playerMove(0, -MOVING_VELOCITY);
+                    this.playerMove(this.getFacingVector(), true);
                     break;
                 case 'k': // DOWN
-                    this.playerMove(0, +MOVING_VELOCITY);
+                    this.playerMove(this.getFacingVector(), false);
                     break;
                 case 'j': // LEFT
-                    this.playerRotate(-FOV_INCREMENT);
+                    this.playerRotate(+FOV_INCREMENT);
                     break;
                 case 'l': // RIGHT
-                    this.playerRotate(+FOV_INCREMENT);
+                    this.playerRotate(-FOV_INCREMENT);
                     break;
                 default:
                     break;
