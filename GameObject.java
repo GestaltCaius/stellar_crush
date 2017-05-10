@@ -2,11 +2,12 @@ import java.awt.Color;
 
 public class GameObject {
     // Default implementation of a game object
+    // mass and radius not final anymore because when objects merge, they get bigger and heavier
     private Vector r;
     private Vector v;
-    private final double mass;
+    private double mass;
     private final Color color;
-    private final double radius; //"This default pen radius is about 1/200 the width of the default canvas" @StdDraw doc
+    private double radius; //"This default pen radius is about 1/200 the width of the default canvas" @StdDraw doc
 
     public GameObject(Vector r, Vector v, double mass, Color color, double radius) {
         this.r = r;
@@ -63,6 +64,10 @@ public class GameObject {
         return mass;
     }
 
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
+
     // Return the color of the object (useful to draw it in the IViewPort)
     // I could've return color, but I just want to make sure that nobody can access my private fields
     public Color getColor() {
@@ -86,6 +91,10 @@ public class GameObject {
 
     public boolean touch(GameObject that) {
         return this.distanceTo(that) <= this.getRadius()+ that.getRadius();
+    }
+
+    public void merge(GameObject that) {
+        this.radius += that.radius;
     }
 
 }

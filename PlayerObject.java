@@ -68,4 +68,9 @@ public class PlayerObject extends GameObject implements IViewPort {
     public Vector getFacingVector() {
         return VectorUtil.direction(this.getVelocity());
     }
+
+    @Override // When a player eats an enemy, it doesnt get bigger, but heavier ! (in order to eat heavier enemies)
+    public void merge(GameObject object) {
+        this.setMass(this.getMass() + object.getMass());
+    }
 }

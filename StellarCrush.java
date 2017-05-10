@@ -51,6 +51,7 @@ public class StellarCrush {
     static final double softE = 0.001; // softening factor to avoid division by zero calculating force for co-located objects
     static double scale = 5e10; // plotted universe size
     public static String screenshotsPath;
+    private static int state; // I use it to know if the player died or won
 
     public static void main(String[] args) {
         // Screenshots folder and pathname (only works on Windows, because on Linux it creates a stellarcrush\screenshots folder)
@@ -72,7 +73,8 @@ public class StellarCrush {
                     game = new GameState(dr);
                     TitleScreen = false;
                 } else {
-                    game.update(GAME_DELAY_TIME);
+                    state = game.update(GAME_DELAY_TIME);
+                    if (state != 0) break; // Player is dead or won so we have to exit the loop
                 }
             }
             char key = '\0';
@@ -94,6 +96,35 @@ public class StellarCrush {
                         break;
                     }
             }
+        }
+        // If you are here, it means player is dead or won
+        if (state == -1) drawGameOver(dr);
+        else drawWin(dr);
+    }
+
+    private static void drawGameOver(Draw dr) {
+        dr.clear(Draw.BLACK);
+        dr.setPenColor(Draw.BOOK_RED);
+        dr.text(0, 0, "GAME OVER");
+        dr.text(0, -StellarCrush.scale * 0.5, "q to quit the game");
+        dr.show();
+        while (true) {
+            char key = '\0';
+            if (dr.hasNextKeyTyped()) key = dr.nextKeyTyped();
+            if (key == 'q') System.exit(0);
+        }
+    }
+
+    private static void drawWin(Draw dr) {
+        dr.clear(Draw.BLACK);
+        dr.setPenColor(Draw.BOOK_RED);
+        dr.text(0, 0, "YOU WIN! WELL DONE.");
+        dr.text(0, -StellarCrush.scale * 0.5, "q to quit the game");
+        dr.show();
+        while (true) {
+            char key = '\0';
+            if (dr.hasNextKeyTyped()) key = dr.nextKeyTyped();
+            if (key == 'q') System.exit(0);
         }
     }
 
