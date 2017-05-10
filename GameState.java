@@ -7,14 +7,22 @@ public class GameState {
     private final PlayerObject player;
     private final Draw dr;
 
-    void update(int delay) {
+    // Add return value to quit game when player is dead
+    boolean update(int delay) {
         // Main game loop update step
         HashMap<GameObject, Vector> forces = calculateForces();
         dr.clear(Draw.BLACK);
         // if too slow, could do two separate loops for move and show, with clear in the middle
+        double px = VectorUtil.getX(player.getLocation());
+        double py = VectorUtil.getY(player.getLocation());
+        double pr = player.getRadius();
         for (GameObject asteroid : objects) {
             asteroid.move(forces.get(asteroid), delay);
-            asteroid.draw(dr);
+            if (asteroid != player && asteroid.touch(player)) {
+                if (asteroid.getMass() <= player.getMass()) objects.remove(asteroid);
+                else return false;
+            }
+            else asteroid.draw(dr);
         }
         Vector playerEyesight = player.getLocation().plus(player.getFacingVector().times(player.getRadius()));
         dr.setPenColor(Draw.RED);
@@ -24,6 +32,8 @@ public class GameState {
         // Player View
         player.updatePlayerView(objects);
         player.processCommand(delay);
+
+        return true;
     }
 
     private HashMap<GameObject, Vector> calculateForces() {

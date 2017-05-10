@@ -23,8 +23,6 @@ public class Camera {
         dr.setLocationOnScreen(dim.width / 2, 1);
         dr.setXscale(-StellarCrush.scale, StellarCrush.scale);
         dr.setYscale(-StellarCrush.scale, StellarCrush.scale);
-        //double Yscale = ((PlayerObject) holder).getRadius() * 10;
-        //dr.setYscale(-Yscale, Yscale);
     }
 
     void render(ArrayList<GameObject> objects) {
@@ -54,11 +52,16 @@ public class Camera {
         return this.dr;
     }
 
+    // draw object in field of view and highlight the eatable ones
     private void renderObject(GameObject object) {
         Vector delta = object.getLocation().minus(holder.getLocation());
         dr.setPenColor(object.getColor());
         dr.filledCircle(VectorUtil.getX(delta), 0,
                 object.getRadius());
+        if (object.getMass() > ((GameObject) holder).getMass()) {
+            dr.setPenColor(Draw.WHITE); // I use white because I made sure that none of the enemies are white (it's the player's color)
+            dr.circle(VectorUtil.getX(delta), 0, object.getRadius());
+        }
     }
 
 

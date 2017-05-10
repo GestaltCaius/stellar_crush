@@ -10,6 +10,7 @@ public class PlayerObject extends GameObject implements IViewPort {
     private static final double DEFAULT_FOV = Math.PI / 2; // field of view of player's viewport
     private static final double FOV_INCREMENT = Math.PI / 36; // rotation speed
     private static final double MOVING_VELOCITY = GameObjectLibrary.VELOCITY_MAX;
+    private ArrayList<GameObject> objectsInFOV;
 
     private Camera cam;
 
@@ -66,11 +67,5 @@ public class PlayerObject extends GameObject implements IViewPort {
     // TODO make sure it's *always* OK to use the initial Vector direction method. Might cause bugs
     public Vector getFacingVector() {
         return VectorUtil.direction(this.getVelocity());
-    }
-
-    // highlight objects below this mass
-    public double highlightLevel() {
-        return 42.0;
-        //TODO
     }
 }

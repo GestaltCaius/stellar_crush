@@ -59,6 +59,10 @@ public class GameObject {
         return new Vector(new double[]{VectorUtil.getX(v), VectorUtil.getY(v)});
     }
 
+    public double getMass() {
+        return mass;
+    }
+
     // Return the color of the object (useful to draw it in the IViewPort)
     // I could've return color, but I just want to make sure that nobody can access my private fields
     public Color getColor() {
@@ -79,4 +83,9 @@ public class GameObject {
         Vector addpos = facing.times(this.getRadius() / 2); // it's either + or - MOVING_VELOCITY
         this.r = this.r.plus(addpos);
     }
+
+    public boolean touch(GameObject that) {
+        return this.distanceTo(that) <= this.getRadius()+ that.getRadius();
+    }
+
 }
